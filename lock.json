@@ -1,0 +1,9 @@
+{
+  "https://deno.land/std@0.90.0/fmt/colors.ts": "db22b314a2ae9430ae7460ce005e0a7130e23ae1c999157e3bb77cf55800f7e4",
+  "https://deno.land/std@0.90.0/testing/_diff.ts": "961eaf6d9f5b0a8556c9d835bbc6fa74f5addd7d3b02728ba7936ff93364f7a3",
+  "https://deno.land/std@0.90.0/testing/asserts.ts": "83889f9a37bdab16cb68b023a15f9172ceb644f62c0e727c72d4870a666e53d6",
+  "https://raw.githubusercontent.com/shina/library/1.0.0/clone.js": "c3ae46b14a0dd61ac4dcb2a41d637999e207959f195cbe84ef24394d213db5b3",
+  "https://raw.githubusercontent.com/shina/library/1.0.0/comparison.ts": "66fc7bcab51a6869ed579cae6ec8fc96895f056756cb0748ac08f37869372f40",
+  "https://raw.githubusercontent.com/shina/library/1.0.0/random.ts": "e6d3a46c7062281116e47b5d349407ac2b06434df565ac84b88e116d5fd0250a",
+  "https://raw.githubusercontent.com/shina/library/1.0.2/pipe.ts": "5613a4bf070b4c644dc31c928a40c1c68644846e691561c61592557ed263591a"
+}
