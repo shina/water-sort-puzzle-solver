@@ -1,0 +1,27 @@
+{
+  "name": "water-sort-puzzle-solver",
+  "version": "1.0.0",
+  "description": "## The game",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel ui/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shina/water-sort-puzzle-solver.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shina/water-sort-puzzle-solver/issues"
+  },
+  "homepage": "https://github.com/shina/water-sort-puzzle-solver#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^4.2.3",
+    "@babel/polyfill": "7.12.1",
+    "svelte": "3.35.0",
+    "parcel-bundler": "1.12.5",
+    "parcel-plugin-svelte": "4.0.6"
+  }
+}

@@ -1,0 +1,41 @@
+.stage {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.tube {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 50px;
+    height: 200px;
+    border: 3px solid #000;
+    border-top: none;
+    padding: 3px;
+}
+
+.tube-selected {
+    border: 6px solid #000;
+    border-top: none;
+}
+
+.colour {
+    width: 50px;
+    height: 50px;
+}
+
+.blue {
+    background-color: blue;
+}
+
+.red {
+    background-color: red;
+}
+
+.yellow {
+    background-color: yellow;
+}
+
+.purple {
+    background-color: purple;
+}

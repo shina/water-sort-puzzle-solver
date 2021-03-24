@@ -1,5 +1,5 @@
 import {availableTubes, checkWin, Stage, transferColour, Tube} from "./game.ts";
-import {clone, getOneRandomly, pipe} from "./deps.ts";
+import {clone, getOneRandomly, pipe} from "./build/deps.ts";
 
 type Log = string[];
 
