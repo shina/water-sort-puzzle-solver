@@ -50,18 +50,3 @@ export function isTransferValid(tube1: Tube, tube2: Tube, tubeLimit = 4): boolea
         return false;
     }
 }
-
-
-/**
- * Finds the tubes available to be used
- * When the `tube` is defined, it finds the possible tubes to be transferred to
- */
-export function availableTubes(stage: Stage, tube?: Tube): Tube[] {
-    if (tube !== undefined) {
-        return stage
-            .filter(t => t !== tube)
-            .filter(t => isTransferValid(tube, t));
-    } else {
-        return stage.filter(t => t.length !== 0);
-    }
-}

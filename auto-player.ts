@@ -1,4 +1,4 @@
-import {availableTubes, checkWin, Stage, transferColour, Tube} from "./game.ts";
+import {checkWin, isTransferValid, Stage, transferColour, Tube} from "./game.ts";
 import {clone, getOneRandomly, pipe} from "./build/deps.ts";
 
 type Log = string[];
@@ -72,6 +72,20 @@ export async function findShortestGame(stage: Stage, times: number): Promise<Log
         return games[shortest.index];
     } else {
         throw new Error('Something weird happened');
+    }
+}
+
+/**
+ * Finds the tubes available to be used
+ * When the `tube` is defined, it finds the possible tubes to be transferred to
+ */
+export function availableTubes(stage: Stage, tube?: Tube): Tube[] {
+    if (tube !== undefined) {
+        return stage
+            .filter(t => t !== tube)
+            .filter(t => isTransferValid(tube, t));
+    } else {
+        return stage.filter(t => t.length !== 0);
     }
 }
 

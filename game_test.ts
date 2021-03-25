@@ -1,5 +1,5 @@
 import {assert, assertEquals} from "./build/deps.ts";
-import {availableTubes, checkWin, isTransferValid, transferColour, Tube} from "./game.ts";
+import {checkWin, isTransferValid, transferColour, Tube} from "./game.ts";
 
 Deno.test('checkWin true', () => assert(checkWin([[1, 1, 1], [2, 2, 2]], 3)));
 Deno.test('checkWin false', () => assert(checkWin([[1, 1, 2], [2, 2, 1]], 3) === false));
@@ -51,36 +51,4 @@ Deno.test('isTransferValid: to an empty tube', () => assert(isTransferValid([0, 
 Deno.test('isTransferValid from no-diff to en empty tube: false', () => {
     assert(isTransferValid([1, 1, 1, 1], []) === false);
     assert(isTransferValid([1, 1, 1], []) === false);
-});
-
-Deno.test('availableTubes', () => {
-    const stage = [
-        [],
-        [1],
-        [1, 2, 2],
-        [2, 1, 1]
-    ];
-
-    assertEquals(availableTubes(stage), [
-        [1],
-        [1, 2, 2],
-        [2, 1, 1]
-    ]);
-});
-Deno.test('availableTubes with tube', () => {
-    const stage = [
-        [],
-        [1],
-        [1, 2, 2],
-        [2, 1, 1]
-    ];
-
-    assertEquals(availableTubes(stage, stage[1]), [
-        [2, 1, 1]
-    ]);
-
-    assertEquals(availableTubes(stage, stage[3]), [
-        [],
-        [1]
-    ]);
 });
