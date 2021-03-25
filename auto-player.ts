@@ -1,5 +1,5 @@
 import {checkWin, isTransferValid, Stage, transferColour, Tube} from "./game.ts";
-import {clone, getOneRandomly, pipe} from "./build/deps.ts";
+import {clone, getOneRandomly, hasDiff, pipe} from "./build/deps.ts";
 
 type Log = string[];
 
@@ -83,9 +83,18 @@ export function availableTubes(stage: Stage, tube?: Tube): Tube[] {
     if (tube !== undefined) {
         return stage
             .filter(t => t !== tube)
-            .filter(t => isTransferValid(tube, t));
+            .filter(t => isTransferValidPlayer(tube, t));
     } else {
         return stage.filter(t => t.length !== 0);
+    }
+}
+
+export function isTransferValidPlayer(tube1: Tube, tube2: Tube, tubeLimit = 4): boolean {
+    // a tube without any different colour don't need to go to an empty tube
+    if (!hasDiff(tube1) && tube2.length === 0) {
+        return false;
+    } else {
+        return isTransferValid(tube1, tube2, tubeLimit);
     }
 }
 

@@ -48,7 +48,3 @@ Deno.test('isTransferValid true', () => assert(isTransferValid([1, 1, 1], [2, 2,
 Deno.test('isTransferValid false', () => assert(isTransferValid([1, 1, 1], [2, 2, 2]) === false));
 Deno.test('isTransferValid: when tube is full', () => assert(isTransferValid([1, 1, 1], [1, 1, 1, 1]) === false));
 Deno.test('isTransferValid: to an empty tube', () => assert(isTransferValid([0, 1, 1], [])));
-Deno.test('isTransferValid from no-diff to en empty tube: false', () => {
-    assert(isTransferValid([1, 1, 1, 1], []) === false);
-    assert(isTransferValid([1, 1, 1], []) === false);
-});

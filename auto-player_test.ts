@@ -1,5 +1,5 @@
-import {assertEquals} from "./build/deps.ts";
-import {availableTubes} from "./auto-player.ts";
+import {assert, assertEquals} from "./build/deps.ts";
+import {availableTubes, isTransferValidPlayer} from "./auto-player.ts";
 
 
 Deno.test('availableTubes', () => {
@@ -32,4 +32,9 @@ Deno.test('availableTubes with tube', () => {
         [],
         [1]
     ]);
+});
+
+Deno.test('isTransferValidPlayer from no-diff to en empty tube: false', () => {
+    assert(isTransferValidPlayer([1, 1, 1, 1], []) === false);
+    assert(isTransferValidPlayer([1, 1, 1], []) === false);
 });

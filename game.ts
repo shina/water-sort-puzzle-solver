@@ -38,14 +38,7 @@ export function transferColour(tube1: Tube, tube2: Tube, size = 4) {
 export function isTransferValid(tube1: Tube, tube2: Tube, tubeLimit = 4): boolean {
     // destination must have space
     if (tube2.length < tubeLimit) {
-
-        // a tube without any different colour don't need to go to an empty tube
-        if (!hasDiff(tube1) && tube2.length === 0) {
-            return false;
-        } else {
-            return tube1[tube1.length - 1] === tube2[tube2.length - 1] || tube2.length === 0;
-        }
-
+        return tube1[tube1.length - 1] === tube2[tube2.length - 1] || tube2.length === 0;
     } else {
         return false;
     }
