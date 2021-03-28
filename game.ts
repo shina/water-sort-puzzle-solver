@@ -7,7 +7,7 @@ export type Stage = Tube[];
 /**
  * Checks if the game is completed
  */
-export function checkWin(stage: Stage, size = 4): boolean {
+export async function checkWin(stage: Stage, size = 4): Promise<boolean> {
     const hasTubeWithDifferentColour = stage.some(tube => hasDiff(tube));
     const hasTubeNotFullOrEmpty = stage.some(tube => tube.length > 0 && tube.length < size);
 
@@ -19,7 +19,7 @@ export function checkWin(stage: Stage, size = 4): boolean {
  * Mutates the tubes, transferring the colour from tube1 to tube2
  * This function does not check if a transfer is allowed, use `isTransferValid`
  */
-export function transferColour(tube1: Tube, tube2: Tube, size = 4) {
+export async function transferColour(tube1: Tube, tube2: Tube, size = 4): Promise<void> {
     const colour = tube1.pop();
     if (colour !== undefined) {
         tube2.push(colour);

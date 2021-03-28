@@ -36,6 +36,6 @@ console.log(
             [],
             []
         ],
-        1 // how many times the game will be played to find the shortest game
+        100 // how many times the game will be played to find the shortest game
     )
 );

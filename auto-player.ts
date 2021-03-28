@@ -5,22 +5,22 @@ import {checkWin, transferColour} from "./game.ts";
 type Log = string[];
 
 interface ICheckWin {
-    (stage: Game.Stage, size?: number): boolean;
+    (stage: Game.Stage, size?: number): Promise<boolean>;
 }
 
 interface ITakeTubeRandomly {
-    (stage: Game.Stage, tube?: Game.Tube): Game.Tube;
+    (stage: Game.Stage, tube?: Game.Tube): Promise<Game.Tube>;
 }
 
 interface ITransferColour {
-    (tube1: Game.Tube, tube2: Game.Tube, size?: number): void;
+    (tube1: Game.Tube, tube2: Game.Tube, size?: number): Promise<void>;
 }
 
-interface IPlay {
+export interface IPlay {
     (stage: Game.Stage): Promise<Log>;
 }
 
-interface IFindShortestGame {
+export interface IFindShortestGame {
     (stage: Game.Stage, times: number): Promise<Log>;
 }
 
@@ -39,18 +39,18 @@ export function play(
     transferColour: ITransferColour,
     log: Log,
     stage: Game.Stage
-): Promise<Log> { // reverse to sync
-    return new Promise((resolve) => {
+): Promise<Log> {
+    return new Promise(async (resolve) => {
         const initialStage: Game.Stage = clone(stage);
 
         let counter = 0;
-        while (!checkWin(stage)) {
-            const tube1 = takeTubeRandomly(stage);
-            const tube2 = takeTubeRandomly(stage, tube1);
+        while (!(await checkWin(stage))) {
+            const tube1 = await takeTubeRandomly(stage);
+            const tube2 = await takeTubeRandomly(stage, tube1);
 
             if (tube2 !== undefined) {
                 log.push(`${stage.indexOf(tube1) + 1} -> ${stage.indexOf(tube2) + 1}`);
-                transferColour(tube1, tube2);
+                await transferColour(tube1, tube2);
             } else {
                 // it means there are no tube available to transfer from tube1
                 counter++;
@@ -128,7 +128,7 @@ export function isTransferValid(tube1: Game.Tube, tube2: Game.Tube, tubeLimit = 
     }
 }
 
-function takeTubeRandomly(stage: Game.Stage, tube?: Game.Tube): Game.Tube {
+export async function takeTubeRandomly(stage: Game.Stage, tube?: Game.Tube): Promise<Game.Tube> {
     return pipe<Game.Tube>(
         () => availableTubes(stage, tube),
         getOneRandomly
