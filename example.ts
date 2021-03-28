@@ -1,4 +1,4 @@
-import {findShortestGame} from "./auto-player.ts";
+import {AutoPlayer} from "./auto-player.ts";
 
 /**
  * Colours are defined just to have a readable `Colour`
@@ -16,8 +16,10 @@ const blueLight = 9;
 const pink = 10;
 const brown = 11;
 
+const autoPlayer = new AutoPlayer();
+
 console.log(
-    await findShortestGame(
+    await autoPlayer.findShortestGame(
         [
             [grey, brown, orange, blueLight], // each `Tube` is filled from the bottom to top
             [purple, greenLight, yellow, grey],
@@ -34,6 +36,6 @@ console.log(
             [],
             []
         ],
-        1000 // how many times the game will be played to find the shortest game
+        1 // how many times the game will be played to find the shortest game
     )
 );

@@ -1,17 +1,47 @@
-import {checkWin, isTransferValid, Stage, transferColour, Tube} from "./game.ts";
+import * as Game from "./game.ts";
 import {clone, getOneRandomly, hasDiff, pipe} from "./build/deps.ts";
+import {checkWin, transferColour} from "./game.ts";
 
 type Log = string[];
+
+interface ICheckWin {
+    (stage: Game.Stage, size?: number): boolean;
+}
+
+interface ITakeTubeRandomly {
+    (stage: Game.Stage, tube?: Game.Tube): Game.Tube;
+}
+
+interface ITransferColour {
+    (tube1: Game.Tube, tube2: Game.Tube, size?: number): void;
+}
+
+interface IPlay {
+    (stage: Game.Stage): Promise<Log>;
+}
+
+interface IFindShortestGame {
+    (stage: Game.Stage, times: number): Promise<Log>;
+}
+
+export class AutoPlayer {
+    play: IPlay = (stage: Game.Stage) => play(checkWin, takeTubeRandomly, transferColour, [], stage);
+    findShortestGame: IFindShortestGame = findShortestGame.bind(null, this.play);
+}
 
 /**
  * Randomly play the game until it is solved
  * It returns an array with the steps used to solve the game
  */
-export function play(stage: Stage): Promise<Log> {
+export function play(
+    checkWin: ICheckWin,
+    takeTubeRandomly: ITakeTubeRandomly,
+    transferColour: ITransferColour,
+    log: Log,
+    stage: Game.Stage
+): Promise<Log> { // reverse to sync
     return new Promise((resolve) => {
-        const log: Log = [];
-
-        const initialStage: Stage = clone(stage);
+        const initialStage: Game.Stage = clone(stage);
 
         let counter = 0;
         while (!checkWin(stage)) {
@@ -41,7 +71,7 @@ export function play(stage: Stage): Promise<Log> {
 /**
  * Play the game *n* `times` and returns the shortest path
  */
-export async function findShortestGame(stage: Stage, times: number): Promise<Log> {
+export async function findShortestGame(play: IPlay, stage: Game.Stage, times: number): Promise<Log> {
     const games: Promise<Log>[] = [];
     for (let i = 0; i < times; i++) {
         games.push(
@@ -79,27 +109,27 @@ export async function findShortestGame(stage: Stage, times: number): Promise<Log
  * Finds the tubes available to be used
  * When the `tube` is defined, it finds the possible tubes to be transferred to
  */
-export function availableTubes(stage: Stage, tube?: Tube): Tube[] {
+export function availableTubes(stage: Game.Stage, tube?: Game.Tube): Game.Tube[] {
     if (tube !== undefined) {
         return stage
             .filter(t => t !== tube)
-            .filter(t => isTransferValidPlayer(tube, t));
+            .filter(t => isTransferValid(tube, t));
     } else {
         return stage.filter(t => t.length !== 0);
     }
 }
 
-export function isTransferValidPlayer(tube1: Tube, tube2: Tube, tubeLimit = 4): boolean {
+export function isTransferValid(tube1: Game.Tube, tube2: Game.Tube, tubeLimit = 4): boolean {
     // a tube without any different colour don't need to go to an empty tube
     if (!hasDiff(tube1) && tube2.length === 0) {
         return false;
     } else {
-        return isTransferValid(tube1, tube2, tubeLimit);
+        return Game.isTransferValid(tube1, tube2, tubeLimit);
     }
 }
 
-function takeTubeRandomly(stage: Stage, tube?: Tube): Tube {
-    return pipe<Tube>(
+function takeTubeRandomly(stage: Game.Stage, tube?: Game.Tube): Game.Tube {
+    return pipe<Game.Tube>(
         () => availableTubes(stage, tube),
         getOneRandomly
     )();
