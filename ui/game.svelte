@@ -1,7 +1,8 @@
 <script>
-  import Tube from "./tube.svelte";
-  import {isTransferValid, transferColour, checkWin} from "../dist/game.bundle.js";
   import {writable} from "svelte/store";
+  import Tube from "./tube.svelte";
+  import { AutoPlayerUI } from "../dist/ui/auto-player-ui";
+  import * as Game from "../dist/game";
 
   const blue = 0;
   const red = 1;
@@ -25,21 +26,31 @@
       [],
   ];
 
+  let isWin = false;
+
   const game = writable({ tubes });
 
+  const autoPlayer = new AutoPlayerUI(1000, async () => {
+      game.set({tubes});
+      isWin = await Game.checkWin(tubes);
+  });
+
   let from;
-  let isWin = false;
-  function tubeClick(tube) {
+  async function tubeClick(tube) {
       if (from === undefined) {
           from = tube;
       } else {
-          if (isTransferValid(from, tube)) {
-              transferColour(from, tube);
+          if (Game.isTransferValid(from, tube)) {
+              await Game.transferColour(from, tube);
               game.set({tubes});
-              isWin = checkWin(tubes);
+              isWin = await Game.checkWin(tubes);
           }
           from = undefined;
       }
+  }
+
+  function play() {
+      autoPlayer.play(tubes);
   }
 </script>
 
@@ -52,3 +63,5 @@
 {#if isWin}
   <h1>Congratulations!</h1>
 {/if}
+
+<button on:click={play}>Solve it!</button>

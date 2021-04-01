@@ -1,18 +1,17 @@
 import * as Game from "./game.ts";
-import {clone, getOneRandomly, hasDiff, pipe} from "./build/deps.ts";
-import {checkWin, transferColour} from "./game.ts";
+import {clone, getOneRandomly, hasDiff, pipe} from "./vendor.bundle.js";
 
 type Log = string[];
 
-interface ICheckWin {
+export interface ICheckWin {
     (stage: Game.Stage, size?: number): Promise<boolean>;
 }
 
-interface ITakeTubeRandomly {
+export interface ITakeTubeRandomly {
     (stage: Game.Stage, tube?: Game.Tube): Promise<Game.Tube>;
 }
 
-interface ITransferColour {
+export interface ITransferColour {
     (tube1: Game.Tube, tube2: Game.Tube, size?: number): Promise<void>;
 }
 
@@ -25,7 +24,7 @@ export interface IFindShortestGame {
 }
 
 export class AutoPlayer {
-    play: IPlay = (stage: Game.Stage) => play(checkWin, takeTubeRandomly, transferColour, [], stage);
+    play: IPlay = (stage: Game.Stage) => play(Game.checkWin, takeTubeRandomly, Game.transferColour, [], stage);
     findShortestGame: IFindShortestGame = findShortestGame.bind(null, this.play);
 }
 
@@ -75,7 +74,7 @@ export async function findShortestGame(play: IPlay, stage: Game.Stage, times: nu
     const games: Promise<Log>[] = [];
     for (let i = 0; i < times; i++) {
         games.push(
-            pipe<Promise<Log>>(
+            pipe(
                 clone,
                 play
             )(stage)
@@ -129,7 +128,7 @@ export function isTransferValid(tube1: Game.Tube, tube2: Game.Tube, tubeLimit = 
 }
 
 export async function takeTubeRandomly(stage: Game.Stage, tube?: Game.Tube): Promise<Game.Tube> {
-    return pipe<Game.Tube>(
+    return pipe(
         () => availableTubes(stage, tube),
         getOneRandomly
     )();

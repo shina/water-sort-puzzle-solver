@@ -1,4 +1,4 @@
-import { hasDiff } from "./build/deps.ts";
+import { hasDiff } from "./vendor.bundle.js";
 
 export type Colour = number;
 export type Tube = Colour[];

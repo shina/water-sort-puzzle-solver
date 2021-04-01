@@ -23,5 +23,6 @@
     "svelte": "3.35.0",
     "parcel-bundler": "1.12.5",
     "parcel-plugin-svelte": "4.0.6"
-  }
+  },
+  "browserslist": ["since 2019"]
 }

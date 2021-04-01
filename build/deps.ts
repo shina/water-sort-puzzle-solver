@@ -11,3 +11,4 @@ export { hasDiff } from "https://raw.githubusercontent.com/shina/library/1.3.0/c
 export { getOneRandomly } from "https://raw.githubusercontent.com/shina/library/1.3.0/random.ts";
 export { clone } from "https://raw.githubusercontent.com/shina/library/1.3.0/clone.js";
 export { pipe } from "https://raw.githubusercontent.com/shina/library/1.3.0/pipe.ts";
+export { delay } from "https://raw.githubusercontent.com/shina/library/1.3.0/async.ts";
